@@ -1,6 +1,6 @@
-# ECS_Playground
-Playground for showing off ecs experiments
+# ECS Playground
 
+Currently the only experiment here is a voxel-ish fire simulation.
 
 Here are some examples of what it looks like running!
 
