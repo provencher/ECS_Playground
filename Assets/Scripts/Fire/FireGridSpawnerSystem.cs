@@ -12,7 +12,6 @@ namespace Fire
     public struct FireGridSpawner : IComponentData
     {
         public Entity FirePrefab;
-        public Entity BucketPrefab;
 
         public int RandomSeed;
 
@@ -36,7 +35,6 @@ namespace Fire
         struct SpawnerInfo
         {
             public Entity FirePrefab;
-            public Entity BucketPrefab;
 
             public int RandomSeed;
 
@@ -74,7 +72,6 @@ namespace Fire
                     spawners[entityInQueryIndex] = new SpawnerInfo
                     {
                         FirePrefab = spawner.FirePrefab,
-                        BucketPrefab = spawner.BucketPrefab,
                         RandomSeed = spawner.RandomSeed,
                         CountX = spawner.FireCountX,
                         CountZ = spawner.FireCountZ,
