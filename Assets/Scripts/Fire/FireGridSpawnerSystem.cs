@@ -18,6 +18,7 @@ namespace Fire
         public int FireCountX;
         public int FireCountZ;
         public float3 Origin;
+        public float InitialHeightVariance;
 
         public int MinInitialFires;
         public int MaxInitialFires;
@@ -42,6 +43,7 @@ namespace Fire
             public int CountZ;
             public int TotalFireCount;
             public float3 Center;
+            public float InitialHeightVariance;
 
             public int MinInitialFires;
             public int MaxInitialFires;
@@ -75,6 +77,7 @@ namespace Fire
                         RandomSeed = spawner.RandomSeed,
                         CountX = spawner.FireCountX,
                         CountZ = spawner.FireCountZ,
+                        InitialHeightVariance = spawner.InitialHeightVariance,
                         TotalFireCount = spawner.FireCountX * spawner.FireCountZ,
                         Center = spawner.Origin,
                         StartFireAmount = spawner.StartFireAmount,
@@ -143,7 +146,7 @@ namespace Fire
                             var posZ = spawner.Center.z + bounds.SizeXZ * (z - (spawner.CountZ - 1) / 2);
 
                             // Add random offset on y to debug that the grid spacing is correct
-                            var posY = /*random.NextFloat(-0.01f, 0.01f) +*/ -0.01f + spawner.Center.y;
+                            var posY = random.NextFloat(-spawner.InitialHeightVariance, spawner.InitialHeightVariance) + spawner.Center.y;
 
                             height.Value = posY;
                             height.Variance = random.NextFloat(0.055f, 0.065f);
@@ -169,19 +172,6 @@ namespace Fire
                     }
                 }).ScheduleParallel();
         }
-
-        /*
-        void StartFire(Entity fireEntity, float startFireAmount, float startFireVelocity)
-        {
-            // Set Starting fire amount
-            var amount = math.clamp(startFireAmount, 0f, 1f);
-            EntityManager.SetComponentData(fireEntity, new TemperatureComponent {Value = amount });
-
-            // Set Starting fire velocity
-            var velocity = math.clamp(startFireVelocity, 0f, 1f);
-            EntityManager.AddComponentData(fireEntity, new TemperatureVelocity { Value = velocity });
-        }
-         */
     }
 }
 

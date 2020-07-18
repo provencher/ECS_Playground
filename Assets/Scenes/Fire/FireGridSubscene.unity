@@ -197,16 +197,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePrefab: {fileID: 8689680459187752648, guid: 9b68219574e27fe4a9835c644411242c, type: 3}
   RandomSeed: 12710
-  FireCountX: 40
-  FireCountZ: 40
+  FireCountX: 500
+  FireCountZ: 500
   Origin:
     x: 0
     y: -0.45
     z: 0
-  MinInitialFires: 2
-  MaxInitialFires: 10
+  InitialHeightVariance: 0.25
+  MinInitialFires: 10
+  MaxInitialFires: 100
   StartFireAmount: 0.5
-  StartFireVelocity: 0.05
+  StartFireVelocity: 0.5
 --- !u!4 &2019898872
 Transform:
   m_ObjectHideFlags: 0

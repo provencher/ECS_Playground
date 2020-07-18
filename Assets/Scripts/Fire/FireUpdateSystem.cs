@@ -69,7 +69,7 @@ namespace Fire
             // Update fires in scene
             Entities
                 .WithDeallocateOnJobCompletion(temperatureComponents)
-                .ForEach((Entity fireEntity, int entityInQueryIndex, ref Translation position, ref TemperatureComponent temperature, ref FireColor color,
+                .ForEach((Entity fireEntity, ref Translation position, ref TemperatureComponent temperature, ref FireColor color,
                     in BoundsComponent bounds, in StartHeight startHeight, in FireColorPalette pallete) =>
                 {
                     var temp = math.clamp(temperature.Value, 0, 1);
@@ -82,7 +82,6 @@ namespace Fire
 
                         // Find neighboring temperatures
                         var neighbors = GetNeighboringIndicies(temperature.GridIndex, gridMetaData.CountX, gridMetaData.CountZ);
-
                         var topTemp = (neighbors.Top == -1) ? 0 : temperatureComponents[neighbors.Top].Value;
                         var bottomTemp = (neighbors.Bottom == -1) ? 0 : temperatureComponents[neighbors.Bottom].Value;
                         var leftTemp = (neighbors.Left == -1) ? 0 : temperatureComponents[neighbors.Left].Value;
@@ -93,7 +92,8 @@ namespace Fire
                         maxTemp = math.max(maxTemp, leftTemp);
                         maxTemp = math.max(maxTemp, rightTemp);
 
-                        if (maxTemp >= (0.95f - temperature.IgnitionVariance))
+                        float varianceTemp = 0.95f - temperature.IgnitionVariance;
+                        if (maxTemp >= varianceTemp)
                         {
                             temperature.Velocity = temperature.StartVelocity * (1 + temperature.IgnitionVariance);
                         }
@@ -114,6 +114,7 @@ namespace Fire
                     // Update fire color
                     float4 newColor = fireOut ? pallete.UnlitColor : math.lerp(pallete.LitLowColor, pallete.LitHighColor, temperature.Value);
                     color.Value = math.lerp(color.Value, newColor, frameLerp);
+
                 }).ScheduleParallel();
         }
 

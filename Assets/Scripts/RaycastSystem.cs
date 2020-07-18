@@ -25,7 +25,7 @@ namespace Water
             new UnityEngine.Plane(UnityEngine.Vector3.up, 0).Raycast(ray, out var enter);
             var hit = (float3)ray.GetPoint(enter);
 
-            const float splashRadius = 0.25f;
+            const float splashRadius = 1f;
 
             Entities
                 .ForEach((Entity entity, int entityInQueryIndex, ref TemperatureComponent temperature, in Translation trans, in WorldRenderBounds bounds, in LocalToWorld ltw) =>
